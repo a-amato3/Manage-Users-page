@@ -1,0 +1,13 @@
+
+<h1>Add User</h1>
+<div class="form-group">
+  <label for="name">Name</label>
+  <input type="text" class="form-control" id="name"
+         required>
+
+
+  <label for="power">User Role</label>
+  <select class="form-control" id="role" required>
+    <option *ngFor="let role of roles" [value]="role">{{role}}</option>
+  </select>
+</div>
