@@ -11,12 +11,14 @@ import { AngularFireModule } from '@angular/fire';
 // import { AngularFireAuthModule } from '@angular/fire/auth';
 import { AngularFireFunctionsModule } from '@angular/fire/functions';
 import { UsersComponent } from './users/users.component';
+import { NavbarComponent } from './navbar/navbar.component';
 
 @NgModule({
   declarations: [
     AppComponent,
     UserFormComponent,
     UsersComponent,
+    NavbarComponent,
   ],
   imports: [
     BrowserModule,

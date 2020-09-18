@@ -26,6 +26,7 @@
     "@clr/icons": "^3.0.0",
     "@clr/ui": "^3.1.8",
     "@webcomponents/webcomponentsjs": "^2.0.0",
+    "bootstrap": "^4.5.2",
     "firebase": "^7.13.1",
     "font-awesome": "^4.7.0",
     "jquery": "^3.5.1",

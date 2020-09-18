@@ -1,10 +1,8 @@
 
 
-<div class="card">
-<h1>User List</h1>
-
+<div id="container" class="card">
 <ul *ngFor="let user of users" class="collection">
-  <li class="collection-item"><strong>{{user.name}}: </strong>{{user.role}}
+  <li class="collection-item"><strong>{{user.id}}: </strong>{{user.role}}
   </li>
 </ul>
 
