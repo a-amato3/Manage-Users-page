@@ -1,5 +1,14 @@
 {
   "projects": {
     "default": "user-management-8e94b"
+  },
+  "targets": {
+    "user-management-8e94b": {
+      "hosting": {
+        "user-management-app": [
+          "user-management-8e94b"
+        ]
+      }
+    }
   }
 }

@@ -1,5 +1,7 @@
-import { Component } from '@angular/core';
-import { User } from '../user';
+import { Component, OnInit } from '@angular/core';
+import { User } from '../models/user';
+import { UserService } from '../services/user.service';
+import { Observable, Subscription } from "rxjs";
 
 @Component({
   selector: 'app-user-form',
@@ -7,26 +9,27 @@ import { User } from '../user';
   styleUrls: ['./user-form.component.scss']
 })
 
-export class UserFormComponent {
+export class UserFormComponent implements OnInit {
 
-  roles = ['Admin', 'Super User', 'Guest', 'Staff']
+  users: User[];
 
-  model = new User(1, 'Aaron', 'Developer')
-  submitted = false;
-  onSubmit() { this.submitted = true; }
+  users$: Observable<User[]>;
+  sub: Subscription;
 
-
-
-  // TODO: Remove this when we're done
-  get diagnostic() { return JSON.stringify(this.model) }
+  constructor(private service: UserService) { }
 
 
 
-  autoUser() {
-    const myUser = new User(1, 'Aaron', 'Developer');
-
-    console.log('My hero is called ' + myUser.name);
+  ngOnInit() {
+    this.sub = this.service
+      .getUsers()
+      .subscribe(users => (this.users= users));
   }
 
 
-}
+
+  }
+
+
+
+
