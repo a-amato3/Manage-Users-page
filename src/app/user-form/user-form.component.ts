@@ -22,7 +22,8 @@ export class UserFormComponent implements OnInit, OnDestroy {
   ngOnInit() {
     this.sub = this.service
       .getUsers()
-      .subscribe(user => (this.user = user))
+      .subscribe(
+        user => (this.user = user))
   }
 
 
@@ -32,6 +33,10 @@ export class UserFormComponent implements OnInit, OnDestroy {
 
   filterCondition(user) {
     return user.name.toLowerCase().indexOf(this.searchText.toLowerCase()) != -1;
+  }
+
+  deleteUser(event, user) {
+    this.service.deleteUser(user);
   }
 }
 

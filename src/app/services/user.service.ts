@@ -6,30 +6,26 @@ import { AngularFireAuth } from '@angular/fire/auth';
 import { Observable } from 'rxjs';
 import { functions } from 'firebase';
 import { map } from 'rxjs/operators';
-import { rejects } from 'assert';
+import * as firebase from 'firebase/app';
 
 @Injectable({
   providedIn: 'root'
 })
 export class UserService {
 
-
   userCollection: AngularFirestoreCollection<User>
   users: Observable<User[]>;
   fbDoc: AngularFirestoreDocument<User>;
 
-  constructor(private afAuth: AngularFireAuth, private firestore: AngularFirestore, private functions: AngularFireFunctions) {
-
-  }
+  constructor(private afAuth: AngularFireAuth, private firestore: AngularFirestore, private functions: AngularFireFunctions) { }
 
 
   getUsers() {
+    /*     this.userCollection = this.firestore.collection('users', ref => {
+          return ref.orderBy('role', 'asc')
+        }); */
 
-
-    this.userCollection = this.firestore.collection('users', ref => {
-      return ref.orderBy('name')
-    });
-    return this.users = this.firestore.collection("users").snapshotChanges().pipe(map(changes => {
+    return this.users = this.firestore.collection("users", ref => ref.orderBy('name', 'asc')).snapshotChanges().pipe(map(changes => {
       return changes.map(a => {
         const data = a.payload.doc.data() as User;
         const id = a.payload.doc.id;
@@ -38,14 +34,19 @@ export class UserService {
     }));
   }
 
-
-
-
-
   async addUser(user: User) {
-     this.firestore.collection('users').add(user)
+    this.firestore.collection('users').add({
+      ...user,
+      timestamp: firebase.firestore.FieldValue.serverTimestamp()
+    })
+
+
   }
 
+  deleteUser(user: User) {
+    this.fbDoc = this.firestore.doc(`users/${user.id}`);
+    this.fbDoc.delete();
+  }
 
 
   //  TODO FIREBASE FUNCTION

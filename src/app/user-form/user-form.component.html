@@ -1,17 +1,12 @@
 <div>
   <div id="container" class="card">
-    <input class="form-control" name="searchInput" placeholder="Search" #searchInput="ngModel" [(ngModel)]="searchText" style="width: 80%;">
+    <input class="form-control" name="searchInput" placeholder="Search" #searchInput="ngModel" [(ngModel)]="searchText"
+      style="width: 80%;">
     <button class="btn btn-outline-primary" (click)="searchText=''">X</button>
-
-
     <ul *ngFor="let user of user" class="collection">
-<tr *ngIf="filterCondition(user)">
-  <li class="collection-item"><strong>{{user.name}}: </strong>{{user.role}}</li>
-
-</tr>
-
-
-
+      <tr *ngIf="filterCondition(user)">
+        <li (dblclick)="deleteUser($event, user)" class="collection-item"><strong>{{user.name}}: </strong>{{user.role}}</li>
+      </tr>
     </ul>
   </div>
 </div>
