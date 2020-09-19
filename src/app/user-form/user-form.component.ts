@@ -15,6 +15,7 @@ export class UserFormComponent implements OnInit, OnDestroy {
 
   user: User[];
   sub: Subscription;
+  searchText: string = "";
 
   constructor(private service: UserService, private afs: AngularFirestore) { }
 
@@ -27,6 +28,10 @@ export class UserFormComponent implements OnInit, OnDestroy {
 
   ngOnDestroy() {
     this.sub.unsubscribe();
+  }
+
+  filterCondition(user) {
+    return user.name.toLowerCase().indexOf(this.searchText.toLowerCase()) != -1;
   }
 }
 
