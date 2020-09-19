@@ -1,0 +1,19 @@
+<div id="container" class="card">
+  <div class="card-content">
+    <span id="text" class="card-title">Add User</span>
+    <hr style="width:180px;text-align:left;margin-left:0">
+    <form (ngSubmit)="onSubmit()" class="col s6">
+      <div class="row">
+      <div class="input-field">
+        <label id="label">Name</label>
+        <input type="text" placeholder="Add Name" [(ngModel)]="user.name" name="name">
+      </div>
+      <div class="input-field">
+        <label id="label">Role</label>
+        <input type="text" placeholder="Add Role" [(ngModel)]="user.role" name="role">
+      </div>
+      <input type="submit" value="Submit" class="btn">
+    </div>
+  </form>
+  </div>
+</div>

@@ -1,6 +1,5 @@
 #container {
   background-color: black;
-
   height: auto;
   margin: 0 auto;
   padding: 10px;
@@ -8,6 +7,12 @@
 }
 
 #text{
+  font-size: 1.6em;
   color: white;
-  width: 50%
+}
+
+.logo {
+  font-size: 1.2em;
+  cursor: pointer;
+  outline: none;
 }

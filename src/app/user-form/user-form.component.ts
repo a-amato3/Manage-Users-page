@@ -1,7 +1,9 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnDestroy, OnInit } from '@angular/core';
 import { User } from '../models/user';
 import { UserService } from '../services/user.service';
 import { Observable, Subscription } from "rxjs";
+import { AngularFirestore, AngularFirestoreCollection } from '@angular/fire/firestore';
+import { map } from 'rxjs/operators';
 
 @Component({
   selector: 'app-user-form',
@@ -9,26 +11,24 @@ import { Observable, Subscription } from "rxjs";
   styleUrls: ['./user-form.component.scss']
 })
 
-export class UserFormComponent implements OnInit {
+export class UserFormComponent implements OnInit, OnDestroy {
 
-  users: User[];
-
-  users$: Observable<User[]>;
+  user: User[];
   sub: Subscription;
 
-  constructor(private service: UserService) { }
-
-
+  constructor(private service: UserService, private afs: AngularFirestore) { }
 
   ngOnInit() {
     this.sub = this.service
       .getUsers()
-      .subscribe(users => (this.users= users));
+      .subscribe(user => (this.user = user))
   }
 
 
-
+  ngOnDestroy() {
+    this.sub.unsubscribe();
   }
+}
 
 
 
