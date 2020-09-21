@@ -7,12 +7,19 @@
   padding: 10px;
   position: relative;
 }
+
+
 #search {
-  column-gap: 80px;
   width: auto;
-  height: auto;
-  width: 50%;
+  width: 70%;
   margin: 0 auto;
   padding: 10px;
   position: relative;
+}
+
+#update{
+  color: black;
+}
+*:focus {
+  outline: none !important;
 }

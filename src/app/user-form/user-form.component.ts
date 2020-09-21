@@ -1,10 +1,7 @@
-import { Component, OnDestroy, OnInit } from '@angular/core';
+import { Component, OnDestroy, OnInit, Input, EventEmitter, Output } from '@angular/core';
 import { User } from '../models/user';
 import { UserService } from '../services/user.service';
-import { Observable, Subscription } from "rxjs";
-import { AngularFirestore, AngularFirestoreCollection } from '@angular/fire/firestore';
-import { map } from 'rxjs/operators';
-
+import { Subscription } from "rxjs";
 @Component({
   selector: 'app-user-form',
   templateUrl: './user-form.component.html',
@@ -13,11 +10,17 @@ import { map } from 'rxjs/operators';
 
 export class UserFormComponent implements OnInit, OnDestroy {
 
-  user: User[];
+  @Input() user: User[];
   sub: Subscription;
   searchText: string = "";
+  editState: boolean = false;
+  userToEdit: User;
+  public disableUser: boolean = false;
 
-  constructor(private service: UserService, private afs: AngularFirestore) { }
+
+  @Output() update: EventEmitter<any> = new EventEmitter();
+
+  constructor(private service: UserService) { }
 
   ngOnInit() {
     this.sub = this.service
@@ -26,18 +29,48 @@ export class UserFormComponent implements OnInit, OnDestroy {
         user => (this.user = user))
   }
 
-
   ngOnDestroy() {
     this.sub.unsubscribe();
   }
 
-  filterCondition(user) {
-    return user.name.toLowerCase().indexOf(this.searchText.toLowerCase()) != -1;
+  filterCondition(user: User) {
+    return user.name.toLowerCase().indexOf(this.searchText.toLowerCase()) != -1 ||
+    user.role.toLowerCase().indexOf(this.searchText.toLowerCase()) != -1
   }
 
-  deleteUser(event, user) {
+  deleteUser(event, user: User) {
+    this.clearState();
     this.service.deleteUser(user);
   }
+
+  editUser(event, user: User) {
+    this.editState = true;
+    this.userToEdit = user;
+  }
+  updateUser(user: User) {
+    this.service.updateUser(user);
+    this.clearState();
+  }
+
+  toggleEnable(user: User) {
+    user.checked = !user.checked;
+    this.service.updateUser(user);
+      }
+
+  clearState() {
+    this.editState = false;
+    this.userToEdit = null;
+  }
+
+  enable(){
+    this.disableUser = false
+    this.userToEdit = null;
+ }
+
+ disable(){
+   this.disableUser = true
+   this.userToEdit = null;
+ }
 }
 
 

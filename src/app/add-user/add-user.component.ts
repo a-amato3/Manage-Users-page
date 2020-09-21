@@ -11,7 +11,8 @@ export class AddUserComponent implements OnInit {
 
   user: User = {
     name: '',
-    role: ''
+    role: '',
+    disabled: false,
   }
   constructor(private service: UserService) { }
 

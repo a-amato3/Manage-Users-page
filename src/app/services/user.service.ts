@@ -17,14 +17,10 @@ export class UserService {
   users: Observable<User[]>;
   fbDoc: AngularFirestoreDocument<User>;
 
-  constructor(private afAuth: AngularFireAuth, private firestore: AngularFirestore, private functions: AngularFireFunctions) { }
+  constructor(private firestore: AngularFirestore, private functions: AngularFireFunctions) { }
 
 
   getUsers() {
-    /*     this.userCollection = this.firestore.collection('users', ref => {
-          return ref.orderBy('role', 'asc')
-        }); */
-
     return this.users = this.firestore.collection("users", ref => ref.orderBy('name', 'asc')).snapshotChanges().pipe(map(changes => {
       return changes.map(a => {
         const data = a.payload.doc.data() as User;
@@ -40,24 +36,34 @@ export class UserService {
       timestamp: firebase.firestore.FieldValue.serverTimestamp()
     })
 
-
   }
 
   deleteUser(user: User) {
     this.fbDoc = this.firestore.doc(`users/${user.id}`);
     this.fbDoc.delete();
+    this.fbDoc.delete();
+    //Firebase Function Call
+    /*     return this.afAuth.currentUser.then(() => {
+
+      const test = this.functions.httpsCallable('https://us-central1-user-management-8e94b.cloudfunctions.net/httpDelete');
+      test(null).subscribe((response) => {
+        debugger;
+      }, (error) => {
+      });
+    }).catch((error) => {
+      console.log(error.message, 'error-snackbar');
+    }); */
   }
 
 
-  //  TODO FIREBASE FUNCTION
-  /*
-  this.functions.httpsCallable('MYFUNCTION')
-  ({ text: 'Some Request Data' })
-    .pipe(first())
-    .subscribe(resp => {
-      console.log({ resp });
-    }, err => {
-      console.error({ err });
-    });
-   */
+  updateUser(user: User) {
+    this.fbDoc = this.firestore.doc(`users/${user.id}`);
+    this.fbDoc.update(user);
+  }
+
+
+  disableUser(user: User){
+    this.fbDoc = this.firestore.doc(`users/${user.id}`);
+    this.fbDoc.update(user);
+  }
 }

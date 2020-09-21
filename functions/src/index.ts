@@ -1,33 +1,15 @@
 import * as functions from 'firebase-functions';
-
+import * as admin from 'firebase-admin'
 // // Start writing Firebase Functions
 // // https://firebase.google.com/docs/functions/typescript
 //
-export const helloWorld = functions.https.onRequest((request, response) => {
-  functions.logger.info("Hello logs!", {structuredData: true});
-  response.send("Hello from Firebase!");
-});
+const cors = require('cors')({origin: true});
 
 
-
-// exports.deleteUser = functions.firestore
-export const deleteUser = functions.firestore
-      .document('users/{userID}')
-      .onDelete((snap, context) => {
-        // Get an object representing the document prior to deletion
-        // e.g. {'name': 'Marie', 'age': 66}
-        const deletedValue = snap.data();
-
-        // perform desired operations ...
+export const httpDelete = functions.https.onRequest((req, res) => {
+  cors(req, res, () => {
+    return functions.auth.user().onDelete((user: admin.auth.UserRecord) => {
+      return res.status(200).send(user.uid);
+    });
   });
-
-
-
-
-  /* admin.auth().deleteUser(uid)
-  .then(function() {
-    console.log('Successfully deleted user');
-  })
-  .catch(function(error) {
-    console.log('Error deleting user:', error);
-  }); */
+});

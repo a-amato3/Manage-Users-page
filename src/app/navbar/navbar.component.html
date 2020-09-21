@@ -1,5 +1,24 @@
 <nav>
   <div id="container" class="nav-wrapper black">
-    <a id="text" href="/" class="brand-logo center">User Manager</a>
-  </div>
+    <a  id="text"  href="/" class="brand-logo center">User Manager App</a>
+    <clr-dropdown  [clrCloseMenuOnItemClick]="false">
+      <button clrDropdownTrigger aria-label="Dropdown demo button">
+          <clr-icon shape="bars" style="color: white;" size="34"></clr-icon>
+      </button>
+      <clr-dropdown-menu *clrIfOpen>
+          <div role="separator" aria-hidden="true"></div>
+          <div clrDropdownItem>
+            <a href="https://github.com/a-amato3/Manage-Users-page">
+              <span>Code on Github</span>
+            </a>
+            <span>
+              <hr>
+            </span>
+            <a  href="https://console.firebase.google.com/project/user-management-8e94b/overview">
+              <span>Firebase Project</span>
+            </a>
+          </div>
+      </clr-dropdown-menu>
+  </clr-dropdown>
+</div>
 </nav>

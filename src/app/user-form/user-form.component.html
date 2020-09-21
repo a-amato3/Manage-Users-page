@@ -1,12 +1,36 @@
 <div>
   <div id="container" class="card">
-    <input class="form-control" name="searchInput" placeholder="Search" #searchInput="ngModel" [(ngModel)]="searchText"
-      style="width: 80%;">
-    <button class="btn btn-outline-primary" (click)="searchText=''">X</button>
-    <ul *ngFor="let user of user" class="collection">
+    <clr-icon shape="search"  size="18"></clr-icon>
+    <input id="search" class="clr-control-container" name="searchInput" placeholder="   Search by users name or role" #searchInput="ngModel" [(ngModel)]="searchText"
+      style="border:none">
+    <button class="btn btn-outline-primary" (click)="searchText=''"><clr-icon shape="times" size="18"></clr-icon>
+    </button>
+
+    <ul *ngFor="let user of user">
       <tr *ngIf="filterCondition(user)">
-        <li (dblclick)="deleteUser($event, user)" class="collection-item"><strong>{{user.name}}: </strong>{{user.role}}</li>
-      </tr>
-    </ul>
-  </div>
+        <li >
+  <strong>{{user.name}}: </strong>{{user.role}}<a href="#" class="secondary-content"> </a>
+  <clr-icon (click)="editUser($event, user)"  shape="pencil" size="18"></clr-icon>
+  <clr-icon *ngIf="editState && userToEdit.id == user.id" (click)="clearState()"   shape="resize-down" size="18"></clr-icon>
+  <div *ngIf="editState && userToEdit.id == user.id" >
+    <form  (ngSubmit)="updateUser(user)">
+      <div class="row">
+        <div class="input-field" >
+          <input  type="text" placeholder="Add Name" [(ngModel)]="user.name" name="name" [disabled]='disableUser'>
+        </div>
+        <hr style="width:170px;text-align:left;margin-left:0">
+        <div  class="input-field">
+          <input type="text" placeholder="Add Role" [(ngModel)]="user.role" name="role" [disabled]='disableUser'>
+        </div>
+        <hr style="width:170px;text-align:left;margin-left:0">
+        <input id="update" type="submit" value="Update User" class="btn" [disabled]='disableUser'>
+        <button (click)="deleteUser($event, user)"  class="btn red">Delete User</button>
+        <button (ngSubmit)="updateUser(user)" class="btn btn-danger" (click)="disable()" *ngIf="editState && userToEdit.id == user.id" (click)="clearState()">Disable User</button>
+        <button (ngSubmit)="updateUser(user)"  class="btn btn-success" (click)="enable()" *ngIf="editState && userToEdit.id == user.id" (click)="clearState()">Enable User</button>
+      </div>
+    </form>
+     </div>
+    </li>
+  </tr>
+</ul>
 </div>

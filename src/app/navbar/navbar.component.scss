@@ -9,10 +9,32 @@
 #text{
   font-size: 1.6em;
   color: white;
+  position: absolute;
+  top: 30%;
+  left: 44%;
+  height: 30%;
+  width: 50%;
 }
 
-.logo {
-  font-size: 1.2em;
-  cursor: pointer;
-  outline: none;
+#user {
+  color: white;
+  width: 30px;
+  height: 35px;
+  position: relative;
+  top: 0px;
+  left: 120px;
 }
+#icon {
+  color: white;
+  width: 35px;
+  height: 35px;
+  position: relative;
+  top: 20px;
+  left: 20px;
+}
+
+*:focus {
+  outline: none !important;
+}
+
+
