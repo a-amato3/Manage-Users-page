@@ -1,6 +1,7 @@
 {
   "projects": {
-    "default": "user-management-8e94b"
+    "default": "user-management-8e94b",
+    "prod": "user-management-8e94b"
   },
   "targets": {
     "user-management-8e94b": {
